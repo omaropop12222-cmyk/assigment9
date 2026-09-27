@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ContactHub-Smart Contact Manager</title>
+<link rel="icon" href="images/phone.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Exo:ital,wght@0,100..900;1,100..900&family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="fontawesome-free-7.2.0-web/css/fontawesome.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="fontawesome-free-7.2.0-web/css/solid.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="fontawesome-free-7.2.0-web/css/brands.min.css"
+    />
+
+    <link rel="stylesheet" href="css/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="js/js/bootstrap.min.js" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/media.css" />
+  </head>
+  <body>
+    <header>
+      <nav
+        class="navbar navbar-expand-lg bg-body-tertiary py-3 position-fixed fixed-top"
+      >
+        <div class="container-fluid">
+          <div class="left">
+            <div class="logo d-flex align-items-center gap-3">
+              <div class="left"><i class="fa-solid fa-address-book"></i></div>
+              <div class="right">
+                <h1>Contact<span>Hub</span></h1>
+                <p class="text-muted">Smart Contact Manager</p>
+              </div>
+            </div>
+          </div>
+          <div class="right">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul
+                class="navbar-nav me-auto mb-2 mb-lg-0 d-flex gap-1 align-items-center"
+              >
+                <li class="nav-item">
+                  <button id="addBtn">
+                    <i class="fa-solid fa-plus"></i>
+                    Add <span>Contact</span>
+                  </button>
+                </li>
+                <li class="nav-item">
+                  <div class="ring-icon">
+                    <i class="fa-solid fa-bell"></i>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <div class="setting-icon">
+                    <i class="fa-solid fa-gear"></i>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <div class="img-icon">
+                    <img src="images/av.jpg" alt="avatar" class="w-100" />
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+  <div id="myModal" class="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-header d-flex align-items-center justify-content-between">
+      <h2></h2>
+      <i class="fa-solid fa-xmark close-btn" id="closeBtn"></i>
+    </div>
+
+    <div class="modal-body text-center">
+      <div class="avatar-circle">
+        <i class="fa-solid fa-user"></i>
+      </div>
+<label class="change-photo-btn" for="contactPhoto">
+  <i class="fa-solid fa-camera"></i>
+  Change Photo
+</label>
+<input type="file" id="contactPhoto" class="d-none"  />
+
+      <div class="form-group text-start">
+        <label>Full Name <span class="required">*</span></label>
+        <input type="text" class="form-control" placeholder="Enter full name" id="contactName" oninput="validation(this)" />
+        <div class="text-danger text-1 d-none">Name should contain only letters and spaces (2-50 characters)</div>
+      </div>
+
+      <div class="form-group text-start">
+        <label>Phone Number <span class="required">*</span></label>
+        <input type="text" class="form-control" placeholder="e.g., 01012345678" id="contactPhone" oninput="validation(this)" />
+                <div class="text-danger text-1  d-none">Please enter a valid Egyptian phone number</div>
+      </div>
+
+      <div class="form-group text-start">
+        <label>Email Address</label>
+        <input type="email" class="form-control" placeholder="name@example.com" id="contactEmail" oninput="validation(this)" />
+        <div class="text-danger text-1  d-none">Please enter a valid email address</div>
+      </div>
+      <div class="form-group text-start">
+  <label>Address</label>
+  <input type="text" class="form-control" placeholder="Enter address" id="contactAddress"/>
+</div>
+
+<div class="form-group text-start">
+  <label>Group</label>
+  <select class="form-control" id="contactGroup">
+    <option value="" selected>Select a group</option>
+    <option value="Family">Family</option>
+    <option value="Friends">Friends</option>
+    <option value="Work">Work</option>
+    <option value="School">School</option>
+    <option value="Other">Other</option>
+  </select>
+</div>
+
+<div class="form-group text-start">
+  <label>Notes</label>
+  <textarea class="form-control" rows="3" placeholder="Add notes about this contact" id="contactNotes"></textarea>
+</div>
+
+<div class="checkbox-group d-flex align-items-center gap-4">
+  <label class="check-item">
+    <input type="checkbox" id="favCheck"/>
+    <i class="fa-solid fa-star" style="color:#F59E0B;"></i>
+    Favorite
+  </label>
+  <label class="check-item">
+    <input type="checkbox"  id="emergencyCheck"/>
+    <i class="fa-solid fa-heart-pulse" style="color:#DB2777;"></i>
+    Emergency
+  </label>
+</div>
+
+<div class="modal-footer d-flex gap-3">
+  <button class="btn-cancel" id="cancelBtn">Cancel</button>
+  <button class="btn-save" onclick="saveContact()">
+    <i class="fa-solid fa-check"></i>
+    Save Contact
+  </button>
+</div>
+    </div>
+  </div>
+</div>
+    <main class="py-5">
+      <section class="first-line" id="first-line">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="left col-md-4 col-6">
+              <div class="inner d-flex align-items-center gap-3">
+                <div class="left-users">
+                  <i class="fa-solid fa-users"></i>
+                </div>
+                <div class="right">
+                  <h2>Total</h2>
+                  <span class="counterTotal"></span>
+                </div>
+              </div>
+            </div>
+            <div class="middle col-md-4 col-6">
+              <div class="inner d-flex align-items-center gap-3">
+                <div class="left-star">
+                  <i class="fa-solid fa-star"></i>
+                </div>
+                <div class="right">
+                  <h2>Favorites</h2>
+                  <span class="counterFav"></span>
+                </div>
+              </div>
+            </div>
+            <div class="right col-md-4 col-6">
+              <div class="inner d-flex align-items-center gap-3">
+                <div class="left-heart">
+                  <i class="fa-solid fa-heart-pulse"></i>
+                </div>
+                <div class="right">
+                  <h2>Emergency</h2>
+                  <span class="counterEmergency"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="second-line py-4">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="left col-lg-9 col-12">
+              <div class="inner">
+                <div class="up">
+                  <h2>All Contacts</h2>
+                  <p>Manage and organize your 0 contacts</p>
+                </div>
+                <div class="down">
+                  <div class="search-box position-relative">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input
+                      type="search"
+                      class="form-control my-3"
+                      placeholder="Search by name, phone, or email...."
+                      id="contactSearch"
+                      oninput="search()"
+                    />
+                  </div>
+                </div>
+                <div class="show-contacts d-flex align-items-center justify-content-center  ">
+<div class="row g-4" id="myRow">
+
+</div>
+                </div>
+              </div>
+            </div>
+            <div class="right col-lg-3 col-12">
+              <div class="inner d-flex flex-column gap-3">
+                <div class="upper-card card-f">
+                  <div class="up d-flex align-items-center gap-3">
+                    <div class="left-star">
+                      <i class="fa-solid fa-star"></i>
+                    </div>
+                    <div class="right">
+                      <h3>Favorites</h3>
+                      <p>Quick access to starred contacts</p>
+                    </div>
+                  </div>
+                  <div class="lower padding-1" >
+                    <p></p>
+                  </div>
+                </div>
+                <div class="lower-card card-f">
+                  <div class="up d-flex align-items-center gap-3">
+                    <div class="left-heart">
+                      <i class="fa-solid fa-heart-pulse"></i>
+                    </div>
+                    <div class="right">
+                      <h3>Emergency</h3>
+                      <p>Important contacts for urgent calls</p>
+                    </div>
+                  </div>
+                  <div class="lower padding-1"><p></p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="js/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="js/index.js"></script>
+  </body>
+</html>
